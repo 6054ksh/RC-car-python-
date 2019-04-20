@@ -1,0 +1,77 @@
+function AllMotorsStop2() {
+    pins.digitalWritePin(DigitalPin.P12, 0)
+    pins.digitalWritePin(DigitalPin.P14, 0)
+}
+function JunctionLeftTurn() {
+    Forward2()
+    basic.pause(1000)
+    AllMotorsStop2()
+    basic.pause(100)
+    basic.pause(1000)
+    AllMotorsStop2()
+}
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "w") {
+        Forward2()
+    } else if (receivedString == "a") {
+        Big_Left_Turn2()
+    } else if (receivedString == "d") {
+        Big_Right_Turn2()
+    } else if (receivedString == "f") {
+        AllMotorsStop2()
+    } else if (receivedString == "a") {
+        JunctionLeftTurn()
+    } else if (receivedString == "b") {
+        JunctionRightTurn()
+    } else if (receivedString == "u") {
+        JunctionUTurn()
+    } else if (receivedString == "s") {
+        back()
+    } else {
+        basic.showLeds(`
+            # . . . #
+            . # . # .
+            . . # . .
+            . # . # .
+            # . . . #
+            `)
+    }
+    basic.showString(receivedString)
+    radio.sendString(receivedString)
+})
+function Forward2() {
+    pins.digitalWritePin(DigitalPin.P8, 1)
+    pins.analogWritePin(AnalogPin.P12, 512)
+    pins.digitalWritePin(DigitalPin.P13, 0)
+    pins.digitalWritePin(DigitalPin.P14, 0)
+}
+function JunctionRightTurn() {
+    Forward2()
+    basic.pause(1000)
+    AllMotorsStop2()
+    basic.pause(100)
+    basic.pause(1000)
+    AllMotorsStop2()
+}
+function Big_Left_Turn2() {
+    pins.digitalWritePin(DigitalPin.P13, 1)
+    pins.digitalWritePin(DigitalPin.P14, 1)
+}
+function Big_Right_Turn2() {
+    pins.digitalWritePin(DigitalPin.P13, 0)
+    pins.digitalWritePin(DigitalPin.P14, 1)
+}
+function JunctionUTurn() {
+    AllMotorsStop2()
+    basic.pause(100)
+    basic.pause(2000)
+    AllMotorsStop2()
+}
+function back() {
+    pins.digitalWritePin(DigitalPin.P8, 0)
+    pins.analogWritePin(AnalogPin.P12, 512)
+}
+radio.setGroup(60)
+basic.showIcon(IconNames.Happy)
+pins.analogSetPeriod(AnalogPin.P12, 10000)
+pins.analogSetPeriod(AnalogPin.P14, 10000)
