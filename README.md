@@ -1,4 +1,3 @@
-[코드](https://github.com/6054ksh/RC-car-python-/blob/master/rc%20car%20microbit)  
 
 
 ###### ai-car-python-
